@@ -1,3 +1,9 @@
+(function(){
+    if (sessionStorage.getItem("loggedinuser") != null) {
+        RedirectToProfilePage();
+      }
+})();
+
 $("#btnLogin").on("click",function(e){
     e.preventDefault();
     $("#spn_loginerr").hide();
