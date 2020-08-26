@@ -11,7 +11,7 @@
               <td>${todoList[i].targetDate}</td>
               <td>${(todoList[i].isDone)?"Yes":"No"}</td>
               <td>${(todoList[i].targetDate>Date())?"Yes":"No"}</td>
-              <td><a href="edittodo.html">Edit</a></td>
+              <td><a href="edittodo.html?id=${todoList[i].id}">Edit</a></td>
               <td style="text-align:center"><input type="checkbox" data-id="${todoList[i].id}" name="chkdeletetodo" /></td>
               </tr>`
               $("#tbl_todolist tbody").append(rowhtml);
