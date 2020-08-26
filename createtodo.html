@@ -30,14 +30,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Welcome to ToDo</a>
+          <a class="navbar-brand" href="#"> Create ToDo</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="todos.html" id="btn_createtodo">Todos</a></li>
-          </ul>
-          <ul style="float: right;" class="nav navbar-nav">
-            <li><a href="javascript:void(0);" id="btn_logout">LogOut</a></li>
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="todos.html">ToDo List</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -45,30 +43,34 @@
 
     <div class="container theme-showcase" role="main">
         <div class="jumbotron">
-            <h2>User Profile</h2>
+            <h2>Create ToDo</h2>
             <hr>
-            <div class=row>
-                <div class="row">
-                    <div class="col-sm-3"><b>Name</b></div>
-                    <div class="col-sm-6" id="profile_name"></div>
+            <form>
+                <div class="form-group row">
+                    <label for="inputFirstName" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+                      <span id="spn_title" class="text-danger" style="display: none;">Please enter todo title</span>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputLastName" class="col-sm-2 col-form-label">Target Date</label>
+                    <div class="col-sm-3">
+                      <input type="date" class="form-control" id="inputTargetDate" placeholder="dd-MM-yyyy">
+                      <span id="spn_targetdate" class="text-danger" style="display: none;">Please enter/select date</span>
+                      <span id="spn_targetdateinvalid" class="text-danger" style="display: none;">Invalid Date</span>
+                    </div>
+                  </div>
+                <div class="form-group row">
+                  <div class="col-sm-10">
+                    <button id="btnCreateTodo" type="submit" class="btn btn-primary">Create Todo</button>
+                  </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Email</b></div>
-                    <div class="col-sm-6" id="profile_email"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Address</b></div>
-                    <div class="col-sm-6" id="profile_address"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Gender</b></div>
-                    <div class="col-sm-6" id="profile_gender"></div>
-                </div>
-                <hr>
-                <div class="row"><div class="col-sm-3"><a href="updateprofile.html">Update Profile</a></div></div>
-            </div>
+              </form>
           </div>
-    </div>
+        
+
+    </div><!-- /.container -->
 
 
     <!-- Bootstrap core JavaScript
@@ -77,7 +79,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="dist/js/bootstrap.min.js"></script>
-    <script src="customjs/profile.js"></script>
-    <script src="customjs/logout.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+    <script src="customjs/createtodo.js"></script>
+
   </body>
 </html>

@@ -30,45 +30,36 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Welcome to ToDo</a>
+          <a class="navbar-brand" href="#"> ToDo</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="todos.html" id="btn_createtodo">Todos</a></li>
-          </ul>
-          <ul style="float: right;" class="nav navbar-nav">
-            <li><a href="javascript:void(0);" id="btn_logout">LogOut</a></li>
-          </ul>
+            <ul style="float: right;" class="nav navbar-nav">
+                <li><a href="javascript:void(0);" id="btn_logout">LogOut</a></li>
+              </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container theme-showcase" role="main">
         <div class="jumbotron">
-            <h2>User Profile</h2>
+            <h2>Todo List</h2>
+            <a href="createtodo.html" class="btn btn-primary">Create Todo</a>
             <hr>
-            <div class=row>
-                <div class="row">
-                    <div class="col-sm-3"><b>Name</b></div>
-                    <div class="col-sm-6" id="profile_name"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Email</b></div>
-                    <div class="col-sm-6" id="profile_email"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Address</b></div>
-                    <div class="col-sm-6" id="profile_address"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Gender</b></div>
-                    <div class="col-sm-6" id="profile_gender"></div>
-                </div>
-                <hr>
-                <div class="row"><div class="col-sm-3"><a href="updateprofile.html">Update Profile</a></div></div>
-            </div>
+            <table id="tbl_todolist" class="table">
+                <thead>
+                    <th>Title</th>
+                    <th>Target Date</th>
+                    <th>Is Done</th>
+                    <th>Is Overdue</th>
+                    <th>Actions</th>
+                    <th style="text-align:center"><button id="btndeletetodos" class="btn btn-danger">Delete</button></th>
+                </thead>
+                <tbody></tbody>
+            </table>
           </div>
-    </div>
+        
+
+    </div><!-- /.container -->
 
 
     <!-- Bootstrap core JavaScript
@@ -77,7 +68,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="dist/js/bootstrap.min.js"></script>
-    <script src="customjs/profile.js"></script>
+
+    <script src="customjs/todolist.js"></script>
     <script src="customjs/logout.js"></script>
   </body>
 </html>
