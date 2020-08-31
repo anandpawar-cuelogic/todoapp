@@ -4,7 +4,11 @@
       }
 })();
 
-$("#btnLogin").on("click",function(e){
+window.addEventListener("DOMContentLoaded",function(){
+    document.getElementById("btnLogin").addEventListener("click",LoginUser);
+});
+
+function LoginUser(e){
     e.preventDefault();
     $("#spn_loginerr").hide();
     var logindetails={
@@ -20,7 +24,7 @@ $("#btnLogin").on("click",function(e){
         return false;
     }
     
-});
+};
 
 function ValidateUserLogin(logindetails){
     var isUserExist=false;

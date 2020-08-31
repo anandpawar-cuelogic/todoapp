@@ -1,0 +1,150 @@
+window.addEventListener("DOMContentLoaded",function(){
+    if (sessionStorage.getItem("loggedinuser") === null) {
+        window.location='Index.html';
+      }
+
+      var users = JSON.parse(localStorage.getItem("userlist"));
+      var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+      var todoList=users.find( a => a.email == loggedinuser.email).todos;
+      var rowshtml='';
+      if(todoList){
+          for (var i=0;i<todoList.length;i++){
+              rowshtml+=`<tr>
+              <td>${(todoList[i].isDone)?"<del>"+todoList[i].title+"</del>":todoList[i].title}</td>
+              <td>${todoList[i].targetDate}</td>
+              <td>${(todoList[i].isDone)?"<text style='color:green;'><b>Completed</b></text>":"<text style='color:red;'><b>Pending</b></text>"}</td>
+              <td>${(todoList[i].targetDate>Date())?"Yes":"No"}</td>
+              <td><button type="button" class="text-success" onclick="markasdone(${todoList[i].id})"><i class="fa fa-check-square-o"></i>Mark as done</button></td>
+              <td><a href="edittodo.html?id=${todoList[i].id}"><i class="fa fa-edit"></i>Edit</a></td>
+              <td style="text-align:center"><input type="checkbox" data-id="${todoList[i].id}" name="chkdeletetodo" /></td>
+              </tr>`;
+          }
+          var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
+          tableRef.innerHTML=rowshtml;
+      }
+
+      document.getElementById("btndeletetodos").addEventListener("click",deletetodos);
+      document.getElementById("inputTitleSearch").addEventListener("keyup",searchByTitle);
+
+      //Search by status
+      document.getElementsByName('inputStatusSearch').forEach(function(item) {
+        item.addEventListener("click", function(e) {
+            var selectedStatus=e.target.value;
+            var users = JSON.parse(localStorage.getItem("userlist"));
+          var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+          var todoList=users.find( a => a.email == loggedinuser.email).todos;
+          var filteredtodolist;
+          if(selectedStatus=="all"){
+            filteredtodolist=todoList;
+          }
+          else if(selectedStatus=="completed"){
+            filteredtodolist=todoList.filter(function(value, index, arr){ return value.isDone==true});
+          }
+          else if(selectedStatus=="pending"){
+            filteredtodolist=todoList.filter(function(value, index, arr){ return value.isDone==false});
+          }
+          
+          var rowshtml='';
+          if(filteredtodolist){
+              for (var i=0;i<filteredtodolist.length;i++){
+                  rowshtml+=`<tr>
+                  <td>${(filteredtodolist[i].isDone)?"<del>"+filteredtodolist[i].title+"</del>":filteredtodolist[i].title}</td>
+                  <td>${filteredtodolist[i].targetDate}</td>
+                  <td>${(filteredtodolist[i].isDone)?"<text style='color:green;'><b>Completed</b></text>":"<text style='color:red;'><b>Pending</b></text>"}</td>
+                  <td>${(filteredtodolist[i].targetDate>Date())?"Yes":"No"}</td>
+                  <td><button type="button" class="text-success" onclick="markasdone(${filteredtodolist[i].id})"><i class="fa fa-check-square-o"></i>Mark as done</button></td>
+                  <td><a href="edittodo.html?id=${filteredtodolist[i].id}"><i class="fa fa-edit"></i>Edit</a></td>
+                  <td style="text-align:center"><input type="checkbox" data-id="${filteredtodolist[i].id}" name="chkdeletetodo" /></td>
+                  </tr>`;
+              }
+              
+          }
+          var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
+          tableRef.innerHTML=rowshtml;
+        });
+    });
+})
+
+function deletetodos(e){
+    e.preventDefault();
+    var users = JSON.parse(localStorage.getItem("userlist"));
+    var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+    var todolist=users.find( a => a.email == loggedinuser.email).todos;
+    var newtodolist=todolist;
+    var r = confirm("Are you sure you want to delete selected todos?");
+    if (r == true) {
+        var table = document.getElementById("tbl_todolist");
+        var checkBoxes = table.getElementsByTagName("INPUT");
+        for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked) {
+                var id = checkBoxes[i].getAttribute("data-id");
+                newtodolist=newtodolist.filter(function(value, index, arr){ return value.id != id;});
+            }
+        }
+        /*$('input[name="chkdeletetodo"]:checked').each(function () {
+            var id = $(this).data("id");
+            newtodolist=newtodolist.filter(function(value, index, arr){ return value.id != id;});
+        });*/
+        for(var i=0;i<users.length;i++){
+            if(users[i].email==loggedinuser.email){
+                users[i].todos=newtodolist;
+                break;
+            }
+        }
+        localStorage.setItem("userlist",JSON.stringify(users));
+        window.location="todos.html";
+    } else {
+        return false;
+    }
+};
+
+function markasdone(todoid){
+    var users = JSON.parse(localStorage.getItem("userlist"));
+    var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+    var todolist=users.find( a => a.email == loggedinuser.email).todos;
+    for(var i=0;i<todolist.length;i++){
+        if(todolist[i].id==todoid){
+            todolist[i].isDone=true;
+            break;
+        }
+        
+    }
+    for(var i=0;i<users.length;i++){
+        if(users[i].email==loggedinuser.email){
+            users[i].todos=todolist;
+            break;
+        }
+        
+    }
+    localStorage.setItem("userlist",JSON.stringify(users));
+    window.location="todos.html";
+
+}
+
+function searchByTitle(e){
+    var searchText=e.target.value;
+
+    var users = JSON.parse(localStorage.getItem("userlist"));
+      var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+      var todoList=users.find( a => a.email == loggedinuser.email).todos;
+      let re = new RegExp(searchText, 'gi');
+      var filteredtodolist=todoList.filter(function(value, index, arr){ return value.title.match(re)});
+      var rowshtml='';
+      if(filteredtodolist){
+          for (var i=0;i<filteredtodolist.length;i++){
+              rowshtml+=`<tr>
+              <td>${(filteredtodolist[i].isDone)?"<del>"+filteredtodolist[i].title+"</del>":filteredtodolist[i].title}</td>
+              <td>${filteredtodolist[i].targetDate}</td>
+              <td>${(filteredtodolist[i].isDone)?"<text style='color:green;'><b>Completed</b></text>":"<text style='color:red;'><b>Pending</b></text>"}</td>
+              <td>${(filteredtodolist[i].targetDate>Date())?"Yes":"No"}</td>
+              <td><button type="button" class="text-success" onclick="markasdone(${filteredtodolist[i].id})"><i class="fa fa-check-square-o"></i>Mark as done</button></td>
+              <td><a href="edittodo.html?id=${filteredtodolist[i].id}"><i class="fa fa-edit"></i>Edit</a></td>
+              <td style="text-align:center"><input type="checkbox" data-id="${filteredtodolist[i].id}" name="chkdeletetodo" /></td>
+              </tr>`;
+          }
+          
+      }
+      var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
+      tableRef.innerHTML=rowshtml;
+}
+

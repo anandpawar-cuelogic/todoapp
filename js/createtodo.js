@@ -1,49 +1,64 @@
 (function(){
-    //$("#inputTargetDate").datepicker({ dateFormat: "mm/dd/yyyy" }); 
     if(localStorage.getItem("lasttodoid")==null){
         localStorage.setItem("lasttodoid",0);
     }
 })();
 
-$("#btnCreateTodo").on("click",function(e){
+window.addEventListener("DOMContentLoaded",function(){
+    document.getElementById("btnCreateTodo").addEventListener("click",createToDo)
+})
+
+function createToDo(e){
     e.preventDefault();
     var lasttodoid=Number(localStorage.getItem("lasttodoid"));
     var new_todo={
         id:(lasttodoid+1),
-        title:$("#inputTitle").val(),
-        targetDate:$("#inputTargetDate").val(),
-        isDone:false
+        title:document.getElementById("inputTitle").value,
+        targetDate:document.getElementById("inputTargetDate").value,
+        isDone:false,
+        isPublic:document.querySelector('input[name="public"]:checked').value
     }
 
     if(validatetodoform(new_todo)){
-        var todolist;
-        if(localStorage.getItem("todolist")===null){
-            todolist=[];
+        var users = JSON.parse(localStorage.getItem("userlist"));
+        var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+        var todos=users.find( a => a.email == loggedinuser.email).todos;
+        if(!todos){
+            todos=[];
         }
-        else{
-            todolist=JSON.parse(localStorage.getItem("todolist"));
+        
+        todos.push(new_todo);
+        for(var i=0;i<users.length;i++){
+            if(users[i].email==loggedinuser.email){
+                users[i].todos=todos;
+                break;
+            }
         }
-        todolist.push(new_todo);
-        localStorage.setItem("todolist",JSON.stringify(todolist));
-        window.location="todos.html";
+        localStorage.setItem("userlist",JSON.stringify(users));
         localStorage.setItem("lasttodoid",lasttodoid+1);
+        alert("Todo item added succesfully!")
+        window.location="todos.html";
+        
     }
-});
+};
 
 function validatetodoform(new_todo){
-    $("span.text-danger").hide();
+    var spansToHide = document.getElementsByClassName("text-danger");
+    for(var i = 0; i < spansToHide.length; i++){
+        spansToHide[i].style.display = "none";
+    }
     var isFormValid = true;
     if(!new_todo.title){
         isFormValid=false;
-        $("#spn_title").show();
+        document.getElementById("spn_title").style.display="block";
     }
     if(!new_todo.targetDate){
         isFormValid=false;
-        $("#spn_targetdate").show();
+        document.getElementById("spn_targetdate").style.display="block";
     }
     else if(!validatedate(new_todo.targetDate)){
         isFormValid=false;
-        $("#spn_targetdateinvalid").show();
+        document.getElementById("spn_targetdateinvalid").style.display="block";
     }
     return isFormValid;
 }

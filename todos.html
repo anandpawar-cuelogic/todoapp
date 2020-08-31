@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="js/todolist.js" ></script>
+    <script src="js/logout.js" ></script>
     <title>ToDo App</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
   </head>
 
   <body>
@@ -43,33 +37,32 @@
     <div class="container theme-showcase" role="main">
         <div class="jumbotron">
             <h2>Todo List</h2>
-            <a href="createtodo.html" class="btn btn-primary">Create Todo</a>
+            <div class="row">
+              <div class="col-sm-2"><a href="createtodo.html" class="btn btn-primary">Create Todo</a></div>
+              <div class="col-sm-3"><input class="form-control" type="text" placeholder="Search by title" id="inputTitleSearch"/></div>
+              <div class="col-sm-4">Status: 
+                <input type="radio" name="inputStatusSearch" value="all" checked> All 
+                <input type="radio" name="inputStatusSearch" value="completed"> Completed 
+                <input type="radio" name="inputStatusSearch" value="pending"> Pending
+              </div>
+            </div>
+            
             <hr>
             <table id="tbl_todolist" class="table">
                 <thead>
                     <th>Title</th>
                     <th>Target Date</th>
-                    <th>Is Done</th>
+                    <th>Status</th>
                     <th>Is Overdue</th>
+                    <th></th>
                     <th>Actions</th>
                     <th style="text-align:center"><button id="btndeletetodos" class="btn btn-danger">Delete</button></th>
                 </thead>
-                <tbody></tbody>
+                <tbody id="tbl_todolist_tbody"></tbody>
             </table>
           </div>
         
 
     </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="dist/js/bootstrap.min.js"></script>
-
-    <script src="customjs/todolist.js"></script>
-    <script src="customjs/logout.js"></script>
   </body>
 </html>

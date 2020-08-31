@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="js/createtodo.js" ></script>
+    <script src="js/logout.js" ></script>
     <title>ToDo App</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
   </head>
 
   <body>
@@ -36,6 +30,9 @@
           <ul class="nav navbar-nav">
             <li><a href="profile.html">My Profile</a></li>
             <li><a href="todos.html">ToDo List</a></li>
+          </ul>
+          <ul style="float: right;" class="nav navbar-nav">
+            <li><a href="javascript:void(0);" id="btn_logout">LogOut</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -61,6 +58,25 @@
                       <span id="spn_targetdateinvalid" class="text-danger" style="display: none;">Invalid Date</span>
                     </div>
                   </div>
+                  <fieldset class="form-group">
+                    <div class="row">
+                      <label class="col-form-label col-sm-2">Public</label>
+                      <div class="col-sm-10">
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="public" id="rd_public_yes" value="yes">
+                          <label class="form-check-label" for="rd_public_yes">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="public" id="rd_public_no" value="no" checked>
+                          <label class="form-check-label" for="rd_public_no">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
                 <div class="form-group row">
                   <div class="col-sm-10">
                     <button id="btnCreateTodo" type="submit" class="btn btn-primary">Create Todo</button>
@@ -71,17 +87,6 @@
         
 
     </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-
-    <script src="customjs/createtodo.js"></script>
 
   </body>
 </html>

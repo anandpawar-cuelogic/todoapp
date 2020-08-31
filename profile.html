@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="js/profile.js" ></script>
+    <script src="js/logout.js" ></script>
     <title>ToDo App</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
   </head>
 
   <body>
@@ -30,16 +24,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Welcome to ToDo</a>
+          <a class="navbar-brand" href="#">ToDo App</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="todos.html" id="btn_createtodo">Todos</a></li>
+            <li><a href="todos.html">My ToDos</a></li>
           </ul>
           <ul style="float: right;" class="nav navbar-nav">
-            <li><a href="javascript:void(0);" id="btn_logout">LogOut</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+              <li><a href="javascript:void(0);" id="btn_logout">LogOut</a></li>
+            </ul>
+      </div>
       </div>
     </nav>
 
@@ -47,37 +41,72 @@
         <div class="jumbotron">
             <h2>User Profile</h2>
             <hr>
-            <div class=row>
-                <div class="row">
-                    <div class="col-sm-3"><b>Name</b></div>
-                    <div class="col-sm-6" id="profile_name"></div>
+            <form>
+                <div class="form-group row">
+                  <div class="col-sm-2 col-form-label">
+                    <label for="inputFirstName" >First Name</label>
+                  </div>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                      <span id="spn_fname" class="text-danger" style="display: none;">Please enter your first name</span>
+                    </div>
+                    
+                    <div class="col-sm-2 col-form-label">
+                      <label for="inputLastName" >Last Name</label>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                      <span id="spn_lname" class="text-danger" style="display: none;">Please enter your last name</span>
+                    </div>
+                  </div>
+                <div class="form-group row">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="inputEmail" readonly>
+                  </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Email</b></div>
-                    <div class="col-sm-6" id="profile_email"></div>
+                <fieldset class="form-group">
+                  <div class="row">
+                    <label class="col-form-label col-sm-2">Gender</label>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="rd_male" value="male">
+                        <label class="form-check-label" for="gridRadios1">
+                          Male
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="rd_female" value="female">
+                        <label class="form-check-label" for="gridRadios2">
+                          Female
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="form-group row">
+                    <label for="inputLastName" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputProfileImage" class="col-sm-2 col-form-label">Profile Picture</label>
+                    <div class="col-sm-8">
+                      <img style="height: 50%;width: 50%;" id="imgProfile" />
+                      <input type="file" class="form-control" id="inputProfileImage" accept="image/*" onchange="OnProfilePicChange()" />
+                    </div>
+                  </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <button id="btnUpdateProfile" type="submit" class="btn btn-primary">Update</button>
+                  </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Address</b></div>
-                    <div class="col-sm-6" id="profile_address"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"><b>Gender</b></div>
-                    <div class="col-sm-6" id="profile_gender"></div>
-                </div>
-                <hr>
-                <div class="row"><div class="col-sm-3"><a href="updateprofile.html">Update Profile</a></div></div>
-            </div>
+              </form>
           </div>
-    </div>
+        
 
+    </div><!-- /.container -->
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    <script src="customjs/profile.js"></script>
-    <script src="customjs/logout.js"></script>
   </body>
 </html>
