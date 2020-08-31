@@ -2,6 +2,10 @@
     if(localStorage.getItem("lasttodoid")==null){
         localStorage.setItem("lasttodoid",0);
     }
+
+    if (sessionStorage.getItem("loggedinuser") === null) {
+        window.location='login.html';
+      }
 })();
 
 window.addEventListener("DOMContentLoaded",function(){

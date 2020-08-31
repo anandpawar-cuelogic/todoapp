@@ -1,4 +1,7 @@
 window.addEventListener("DOMContentLoaded",function(){
+    if (sessionStorage.getItem("loggedinuser") === null) {
+        window.location='login.html';
+      }
     const params = new URLSearchParams(window.location.search);
     var id=params.get("id");
     var users = JSON.parse(localStorage.getItem("userlist"));

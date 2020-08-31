@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded",function(){
     if (sessionStorage.getItem("loggedinuser") === null) {
-        window.location='Index.html';
+        window.location='login.html';
       }
 
       var users = JSON.parse(localStorage.getItem("userlist"));
