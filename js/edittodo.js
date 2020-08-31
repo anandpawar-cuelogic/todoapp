@@ -1,7 +1,9 @@
-(function(){
+window.addEventListener("DOMContentLoaded",function(){
     const params = new URLSearchParams(window.location.search);
     var id=params.get("id");
-    var todos=JSON.parse(localStorage.getItem("todolist"));
+    var users = JSON.parse(localStorage.getItem("userlist"));
+        var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+        var todos=users.find( a => a.email == loggedinuser.email).todos;
     var tobeedittodo;
     for (var i=0;i<todos.length;i++){
         if(todos[i].id==id){
@@ -9,22 +11,29 @@
             break;
         }
     }
-    $("#inputId").val(tobeedittodo.id);
-    $("#inputTitle").val(tobeedittodo.title);
-    $("#inputTargetDate").val(tobeedittodo.targetDate);
-})();
+    document.getElementById("inputId").value=tobeedittodo.id;
+    document.getElementById("inputTitle").value=tobeedittodo.title;
+    document.getElementById("inputTargetDate").value=tobeedittodo.targetDate;
+    document.getElementById("rd_public_"+tobeedittodo.isPublic).checked =true;
 
-$("#btnEditTodo").on("click",function(e){
+    document.getElementById("btnEditTodo").addEventListener("click",editTodo)
+})
+
+
+function editTodo(e){
     e.preventDefault();
     const params = new URLSearchParams(window.location.search);
     var id=params.get("id");
-    var todos=JSON.parse(localStorage.getItem("todolist"));
+    var users = JSON.parse(localStorage.getItem("userlist"));
+        var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
+        var todos=users.find( a => a.email == loggedinuser.email).todos;
 
     var tobeupdatetodo={
-        id:$("#inputId").val(),
-        title:$("#inputTitle").val(),
-        targetDate:$("#inputTargetDate").val(),
-        isDone:false
+        id:document.getElementById("inputId").value,
+        title:document.getElementById("inputTitle").value,
+        targetDate:document.getElementById("inputTargetDate").value,
+        isDone:false,
+        isPublic:document.querySelector('input[name="public"]:checked').value
     }
     
     if(validatetodoform(tobeupdatetodo)){
@@ -34,28 +43,36 @@ $("#btnEditTodo").on("click",function(e){
                 todos[i].title=tobeupdatetodo.title;
                 todos[i].targetDate=tobeupdatetodo.targetDate;
                 todos[i].isDone=tobeupdatetodo.isDone
+                todos[i].isPublic=tobeupdatetodo.isPublic
                 break;
             }
         }
-        localStorage.setItem("todolist",JSON.stringify(todos));
+        for(var i=0;i<users.length;i++){
+            if(users[i].email==loggedinuser.email){
+                users[i].todos=todos;
+                break;
+            }
+        }
+        localStorage.setItem("userlist",JSON.stringify(users));
+        alert("Todo item updated succesfully!");
         window.location="todos.html";
     }
-});
+};
 
 function validatetodoform(new_todo){
     $("span.text-danger").hide();
     var isFormValid = true;
     if(!new_todo.title){
         isFormValid=false;
-        $("#spn_title").show();
+        document.getElementById("spn_title").style.display="block";
     }
     if(!new_todo.targetDate){
         isFormValid=false;
-        $("#spn_targetdate").show();
+        document.getElementById("spn_targetdate").style.display="block";
     }
     else if(!validatedate(new_todo.targetDate)){
         isFormValid=false;
-        $("#spn_targetdateinvalid").show();
+        document.getElementById("spn_targetdateinvalid").style.display="block";
     }
     return isFormValid;
 }
