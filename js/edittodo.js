@@ -42,7 +42,6 @@ function editTodo(e){
     if(validatetodoform(tobeupdatetodo)){
         for (var i=0;i<todos.length;i++){
             if(todos[i].id==id){
-                //todos[i].id=tobeupdatetodo.id;
                 todos[i].title=tobeupdatetodo.title;
                 todos[i].targetDate=tobeupdatetodo.targetDate;
                 todos[i].isDone=tobeupdatetodo.isDone

@@ -81,10 +81,7 @@ function deletetodos(e){
                 newtodolist=newtodolist.filter(function(value, index, arr){ return value.id != id;});
             }
         }
-        /*$('input[name="chkdeletetodo"]:checked').each(function () {
-            var id = $(this).data("id");
-            newtodolist=newtodolist.filter(function(value, index, arr){ return value.id != id;});
-        });*/
+        
         for(var i=0;i<users.length;i++){
             if(users[i].email==loggedinuser.email){
                 users[i].todos=newtodolist;
