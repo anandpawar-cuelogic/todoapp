@@ -7,21 +7,27 @@ window.addEventListener("DOMContentLoaded",function(){
       var loggedinuser=JSON.parse(sessionStorage.getItem("loggedinuser"));
       var todoList=users.find( a => a.email == loggedinuser.email).todos;
       var rowshtml='';
-      if(todoList){
+      if(todoList && todoList.length>0 ){
           for (var i=0;i<todoList.length;i++){
               rowshtml+=`<tr>
+              <td style="text-align:center"><input type="checkbox" data-id="${todoList[i].id}" name="chkdeletetodo" /></td>
               <td>${(todoList[i].isDone)?"<del>"+todoList[i].title+"</del>":todoList[i].title}</td>
               <td>${todoList[i].targetDate}</td>
               <td>${(todoList[i].isDone)?"<text style='color:green;'><b>Completed</b></text>":"<text style='color:red;'><b>Pending</b></text>"}</td>
               <td>${(todoList[i].targetDate>Date())?"Yes":"No"}</td>
               <td><button type="button" class="text-success" onclick="markasdone(${todoList[i].id})"><i class="fa fa-check-square-o"></i>Mark as done</button></td>
               <td><a href="edittodo.html?id=${todoList[i].id}"><i class="fa fa-edit"></i>Edit</a></td>
-              <td style="text-align:center"><input type="checkbox" data-id="${todoList[i].id}" name="chkdeletetodo" /></td>
               </tr>`;
           }
-          var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
-          tableRef.innerHTML=rowshtml;
+          
       }
+      else{
+        rowshtml=`<tr>
+        <td colspan="7" style="text-align:center"><b>No records to display</b></td>
+        </tr>`;
+      }
+      var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
+          tableRef.innerHTML=rowshtml;
 
       document.getElementById("btndeletetodos").addEventListener("click",deletetodos);
       document.getElementById("inputTitleSearch").addEventListener("keyup",searchByTitle);
@@ -45,19 +51,24 @@ window.addEventListener("DOMContentLoaded",function(){
           }
           
           var rowshtml='';
-          if(filteredtodolist){
+          if(filteredtodolist && filteredtodolist.length>0){
               for (var i=0;i<filteredtodolist.length;i++){
                   rowshtml+=`<tr>
+                  <td style="text-align:center"><input type="checkbox" data-id="${filteredtodolist[i].id}" name="chkdeletetodo" /></td>
                   <td>${(filteredtodolist[i].isDone)?"<del>"+filteredtodolist[i].title+"</del>":filteredtodolist[i].title}</td>
                   <td>${filteredtodolist[i].targetDate}</td>
                   <td>${(filteredtodolist[i].isDone)?"<text style='color:green;'><b>Completed</b></text>":"<text style='color:red;'><b>Pending</b></text>"}</td>
                   <td>${(filteredtodolist[i].targetDate>Date())?"Yes":"No"}</td>
                   <td><button type="button" class="text-success" onclick="markasdone(${filteredtodolist[i].id})"><i class="fa fa-check-square-o"></i>Mark as done</button></td>
                   <td><a href="edittodo.html?id=${filteredtodolist[i].id}"><i class="fa fa-edit"></i>Edit</a></td>
-                  <td style="text-align:center"><input type="checkbox" data-id="${filteredtodolist[i].id}" name="chkdeletetodo" /></td>
                   </tr>`;
               }
               
+          }
+          else{
+            rowshtml=`<tr>
+            <td colspan="7" style="text-align:center"><b>No records to display</b></td>
+            </tr>`;
           }
           var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
           tableRef.innerHTML=rowshtml;
@@ -127,19 +138,24 @@ function searchByTitle(e){
       let re = new RegExp(searchText, 'gi');
       var filteredtodolist=todoList.filter(function(value, index, arr){ return value.title.match(re)});
       var rowshtml='';
-      if(filteredtodolist){
+      if(filteredtodolist && filteredtodolist.length>0){
           for (var i=0;i<filteredtodolist.length;i++){
               rowshtml+=`<tr>
+              <td style="text-align:center"><input type="checkbox" data-id="${filteredtodolist[i].id}" name="chkdeletetodo" /></td>
               <td>${(filteredtodolist[i].isDone)?"<del>"+filteredtodolist[i].title+"</del>":filteredtodolist[i].title}</td>
               <td>${filteredtodolist[i].targetDate}</td>
               <td>${(filteredtodolist[i].isDone)?"<text style='color:green;'><b>Completed</b></text>":"<text style='color:red;'><b>Pending</b></text>"}</td>
               <td>${(filteredtodolist[i].targetDate>Date())?"Yes":"No"}</td>
               <td><button type="button" class="text-success" onclick="markasdone(${filteredtodolist[i].id})"><i class="fa fa-check-square-o"></i>Mark as done</button></td>
               <td><a href="edittodo.html?id=${filteredtodolist[i].id}"><i class="fa fa-edit"></i>Edit</a></td>
-              <td style="text-align:center"><input type="checkbox" data-id="${filteredtodolist[i].id}" name="chkdeletetodo" /></td>
               </tr>`;
           }
           
+      }
+      else{
+        rowshtml=`<tr>
+        <td colspan="7" style="text-align:center"><b>No records to display</b></td>
+        </tr>`;
       }
       var tableRef = document.getElementById('tbl_todolist').getElementsByTagName('tbody')[0];
       tableRef.innerHTML=rowshtml;

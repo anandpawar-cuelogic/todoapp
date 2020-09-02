@@ -1,6 +1,6 @@
 (function(){
     if (sessionStorage.getItem("loggedinuser") != null) {
-        window.location="profile.html";
+        window.location="todos.html";
       }
 })();
 

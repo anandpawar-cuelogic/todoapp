@@ -1,6 +1,6 @@
 (function(){
     if (sessionStorage.getItem("loggedinuser") != null) {
-        RedirectToProfilePage();
+        RedirectToToDoListPage();
       }
 })();
 
@@ -17,7 +17,7 @@ function LoginUser(e){
     };
     if(ValidateUserLogin(logindetails)){
         sessionStorage.setItem('loggedinuser',JSON.stringify(GetLoggedInUser(logindetails)));
-        RedirectToProfilePage();
+        RedirectToToDoListPage();
     }
     else{
         $("#spn_loginerr").show();
@@ -50,6 +50,6 @@ function GetLoggedInUser(logindetails){
     return user;
 }
 
-function RedirectToProfilePage(){
-    window.location="profile.html";
+function RedirectToToDoListPage(){
+    window.location="todos.html";
 }
