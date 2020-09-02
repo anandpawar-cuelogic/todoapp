@@ -13,17 +13,35 @@ window.addEventListener("DOMContentLoaded",function(){
 
     var today = new Date().toISOString().split('T')[0];
     document.getElementById("inputTargetDate").setAttribute('min', today);
+    document.getElementById("inputReminderDate").setAttribute('min', today);
 })
 
 function createToDo(e){
     e.preventDefault();
     var lasttodoid=Number(localStorage.getItem("lasttodoid"));
+
+    var isReminder=document.querySelector('input[name="reminder"]:checked').value
+    var reminderDate;
+    if(isReminder=='yes'){
+        reminderDate=document.getElementById("inputReminderDate").value;
+    }
+    else{
+        reminderDate='';
+    }
+    var selected_Categories=document.querySelectorAll('input[name="inputCategory"]:checked');
+    var catVals = [];
+     for(var i = 0; i < selected_Categories.length; i++)
+     {
+        catVals.push(selected_Categories[i].value);
+     }
     var new_todo={
         id:(lasttodoid+1),
         title:document.getElementById("inputTitle").value,
         targetDate:document.getElementById("inputTargetDate").value,
         isDone:false,
-        isPublic:document.querySelector('input[name="public"]:checked').value
+        isPublic:document.querySelector('input[name="public"]:checked').value,
+        reminderDate:reminderDate,
+        categories:catVals
     }
 
     if(validatetodoform(new_todo)){
@@ -67,6 +85,22 @@ function validatetodoform(new_todo){
         isFormValid=false;
         document.getElementById("spn_targetdateinvalid").style.display="block";
     }
+    var isReminder=document.querySelector('input[name="reminder"]:checked').value
+    if(isReminder=='yes'){
+        if(!new_todo.reminderDate){
+            isFormValid=false;
+            document.getElementById("spn_reminderdate").style.display="block";
+        }
+        else if(!validatedate(new_todo.reminderDate)){
+            isFormValid=false;
+            document.getElementById("spn_reminderdateinvalid").style.display="block";
+        }
+    }
+    if(!new_todo.categories || new_todo.categories.length==0){
+        isFormValid=false;
+         document.getElementById("spn_categories").style.display="block";
+    }
+    
     return isFormValid;
 }
 
@@ -92,4 +126,13 @@ function stringToDate(_date,_format,_delimiter)
             var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
             formatedDate.setHours(0, 0, 0, 0)
             return formatedDate;
+}
+
+function handleReminderClick(radioReminder){
+    if(radioReminder.value=='yes'){
+        document.getElementById("div_reminderDt").style.display="block";
+    }
+    else{
+        document.getElementById("div_reminderDt").style.display="none";
+    }
 }
