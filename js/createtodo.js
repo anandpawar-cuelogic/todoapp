@@ -9,7 +9,10 @@
 })();
 
 window.addEventListener("DOMContentLoaded",function(){
-    document.getElementById("btnCreateTodo").addEventListener("click",createToDo)
+    document.getElementById("btnCreateTodo").addEventListener("click",createToDo);
+
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("inputTargetDate").setAttribute('min', today);
 })
 
 function createToDo(e){
